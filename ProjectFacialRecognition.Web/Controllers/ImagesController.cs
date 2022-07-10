@@ -1,4 +1,5 @@
 using Amazon.S3;
+using Amazon.S3.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectFacialRecognition.Web.Controllers
@@ -9,7 +10,7 @@ namespace ProjectFacialRecognition.Web.Controllers
     {
         private readonly IAmazonS3 _amazonS3;
         private readonly List<string> _extensionsImage =
-        new List<string>(){"image/jpeg", "image/png"};
+        new List<string>() { "image/jpeg", "image/png" };
         public ImagesController(IAmazonS3 amazonS3)
         {
             _amazonS3 = amazonS3;
@@ -17,20 +18,37 @@ namespace ProjectFacialRecognition.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateImage(IFormFile image)
         {
-            if(!_extensionsImage.Contains(image.ContentType))
+            if (!_extensionsImage.Contains(image.ContentType))
             {
                 return BadRequest("Tipo Inválido.");
             }
-            return Ok(); 
+            using (var imageStream = new MemoryStream())
+            {
+                await image.CopyToAsync(imageStream);
+
+                var request = new PutObjectRequest();
+                request.Key = "selfie " + image.FileName;
+                request.BucketName = "imagesclass";
+                request.InputStream = imageStream;
+                var response = await _amazonS3.PutObjectAsync(request);
+                return Ok(response);
+
+            }
         }
-   
+        [HttpDelete]
+        public async Task<IActionResult> DeleteImage(string nameFileInS3)
+        {
+            var response = await _amazonS3.DeleteObjectAsync("imagesclass", nameFileInS3);
+            return Ok(response);
+        }
+
         [HttpGet("bucket")]
         public async Task<IActionResult> ListBuckets()
         {
             var response = await _amazonS3.ListBucketsAsync();
             return Ok(response);
         }
-        [HttpPost("bucket")] 
+        [HttpPost("bucket")]
         public async Task<IActionResult> CreateBucket(string nameBucket)
         {
             var response = await _amazonS3.PutBucketAsync(nameBucket);
