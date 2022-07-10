@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectFacialRecognition.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectFacualRecognition.Lib", "ProjectFacualRecognition.Lib\ProjectFacualRecognition.Lib.csproj", "{E764BB59-F3D7-495E-BF67-9DDFF5DE9F5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectFacialRecognition.XUnit", "ProjectFacialRecognition.XUnit\ProjectFacialRecognition.XUnit.csproj", "{55AB9E94-ECCF-47D8-B42D-DF64017245ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E764BB59-F3D7-495E-BF67-9DDFF5DE9F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E764BB59-F3D7-495E-BF67-9DDFF5DE9F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E764BB59-F3D7-495E-BF67-9DDFF5DE9F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55AB9E94-ECCF-47D8-B42D-DF64017245ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AB9E94-ECCF-47D8-B42D-DF64017245ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AB9E94-ECCF-47D8-B42D-DF64017245ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AB9E94-ECCF-47D8-B42D-DF64017245ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
