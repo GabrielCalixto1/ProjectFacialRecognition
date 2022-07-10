@@ -31,12 +31,13 @@ namespace ProjectFacualRecognition.Lib.Models
             if (email.Contains('@'))
             {
                 Email = email;
+                return;
             }
             throw new ValidationException("Email must contain @");
         }
         public void SetCpf(string cpf)
         {
-            if (cpf.Length <= 11 && CpfMustHaveOnlyNumbers(cpf))
+            if (cpf.Length == 11 && CpfMustHaveOnlyNumbers(cpf))
             {
                 Cpf = cpf;
             }
@@ -56,6 +57,7 @@ namespace ProjectFacualRecognition.Lib.Models
             if (DateTime.Parse(birthday) < DateTime.Parse("01/01/2010"))
             {
                 Birthday = DateTime.Parse(birthday);
+                return;
             }
             throw new ValidationException("Birthdate must be less than 2010");
 
