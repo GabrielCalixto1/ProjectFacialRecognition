@@ -18,13 +18,14 @@ namespace ProjectFacialRecognition.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserById(int id)
         {
-            return Ok(Users.Find(x =>x.Id == id));
+            var user = Users.Find(x =>x.Id == id);
+            return Ok(user);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateEmailUserById(int id, string email)
         {
             var user = Users.Find(x => x.Id == id);
-            user.SetEmail(email);
+            user?.SetEmail(email);
             return Ok("Successfully changed");
         }
         [HttpDelete]

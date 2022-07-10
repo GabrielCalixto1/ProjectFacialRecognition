@@ -40,7 +40,9 @@ namespace ProjectFacualRecognition.Lib.Models
             if (cpf.Length == 11 && CpfMustHaveOnlyNumbers(cpf))
             {
                 Cpf = cpf;
+                return;
             }
+               throw new ValidationException("Cpf must have only numbers and 11 caracter");
         }
         public bool CpfMustHaveOnlyNumbers(string cpf)
         {
@@ -48,7 +50,7 @@ namespace ProjectFacualRecognition.Lib.Models
             {
                 return false;
             }
-            throw new ValidationException("Cpf must have only numbers");
+         return true;
         }
 
         public void SetBirthday(string birthday)
@@ -71,6 +73,7 @@ namespace ProjectFacualRecognition.Lib.Models
             if (password.Length >= 8)
             {
                 Password = password;
+                return;
             }
             throw new ValidationException("Password must be at least 8 digits");
 
