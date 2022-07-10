@@ -9,7 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
     <PackageReference Include="awssdk.s3" Version="3.7.9.21" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectFacualRecognition.Lib\ProjectFacualRecognition.Lib.csproj" />
   </ItemGroup>
 
 </Project>
