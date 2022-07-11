@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using ProjectFacialRecognition.Web.Dtos;
+using ProjectFacualRecognition.Lib.Data.Repositories;
 using ProjectFacualRecognition.Lib.Data.Repositories.Interfaces;
 using ProjectFacualRecognition.Lib.Models;
 
@@ -12,7 +13,11 @@ namespace ProjectFacialRecognition.Web.Controllers
     {
         private readonly static List<User> Users = new List<User>();
         private readonly IUserRepository _repository;
-        [HttpPost]
+        public UserController(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+        [HttpPost()]
         public async Task<IActionResult> CreateUser(UserDto userDto)
         {
             try
@@ -26,7 +31,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> GetUserById(int id)
         {
 
@@ -52,7 +57,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
+        [HttpPut()]
         public async Task<IActionResult> UpdateEmailUserById(int id, string email)
         {
 
@@ -67,7 +72,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             }
 
         }
-        [HttpDelete]
+        [HttpDelete()]
         public async Task<IActionResult> DeleteUserById(int id)
         {
 

@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<ProjectFacialRecognitionContext>(
-        conn => conn.UseNpgsql(builder.Configuration.GetConnectionString("ProjectFacilRecognition"))
+        conn => conn.UseNpgsql("Server=ec2-34-194-158-176.compute-1.amazonaws.com;Database=davcunpf8cottu;Port=5432;User Id=oobgygtermdffr;Password=b1bcbeb1ec383ac00593c8e4cd6c60542f37881c8b1e1db1de26b22fd78cc60e")
         .UseSnakeCaseNamingConvention()
     );
 

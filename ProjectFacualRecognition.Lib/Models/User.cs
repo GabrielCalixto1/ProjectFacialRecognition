@@ -11,9 +11,13 @@ namespace ProjectFacualRecognition.Lib.Models
         public DateTime Birthdate { get; private set; }
         public string Name { get; private set; }
         public string Password { get; private set; }
-        public string UrlImageRegistration { get; private set; }
+        public string? UrlImageRegistration { get; private set; }
         public DateTime RegistrationDate { get; private set; }
-        public User(int id, string email, string cpf, string birthdate, string name, string password, DateTime registrationDate) : base(id)
+        private User()
+        {
+
+        }
+        public User(int id, string email, string cpf, DateTime birthdate, string name, string password, DateTime registrationDate) : base(id)
         {
             SetEmail(email);
             SetCpf(cpf);
@@ -50,12 +54,12 @@ namespace ProjectFacualRecognition.Lib.Models
          return true;
         }
 
-        public void SetBirthdate(string birthdate)
+        public void SetBirthdate(DateTime birthdate)
         {
 
-            if (DateTime.Parse(birthdate) < DateTime.Parse("01/01/2010"))
+            if (birthdate < DateTime.Parse("01/01/2010"))
             {
-                Birthdate= DateTime.Parse(birthdate);
+                Birthdate = DateTime.SpecifyKind(birthdate, DateTimeKind.Utc);;
                 return;
             }
             throw new ValidationException("Birthdate must be less than 2010");

@@ -2,6 +2,10 @@ namespace ProjectFacualRecognition.Lib.Models
 {
     public class ModelBase
     {
+        protected ModelBase()
+        {
+
+        }
         
          public int Id { get; private set; }
          public ModelBase(int id)
