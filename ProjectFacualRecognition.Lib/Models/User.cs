@@ -1,10 +1,11 @@
+using ProjectFacualRecognition.Lib.Data.Repositories.Interfaces;
 using ProjectFacualRecognition.Lib.Exceptions;
 using System;
 namespace ProjectFacualRecognition.Lib.Models
 {
-    public class User
+    public class User : ModelBase
     {
-        public int Id { get; private set; }
+       
         public string Email { get; private set; }
         public string Cpf { get; private set; }
         public DateTime Birthdate { get; private set; }
@@ -12,9 +13,8 @@ namespace ProjectFacualRecognition.Lib.Models
         public string Password { get; private set; }
         public string UrlImageRegistration { get; private set; }
         public DateTime RegistrationDate { get; private set; }
-        public User(int id, string email, string cpf, string birthdate, string name, string password, DateTime registrationDate)
+        public User(int id, string email, string cpf, string birthdate, string name, string password, DateTime registrationDate) : base(id)
         {
-            SetId(id);
             SetEmail(email);
             SetCpf(cpf);
             SetBirthdate(birthdate);
@@ -22,10 +22,7 @@ namespace ProjectFacualRecognition.Lib.Models
             SetPassword(password);
             SetRegistrationDate(registrationDate);
         }
-        public void SetId(int id)
-        {
-            Id = id;
-        }
+       
         public void SetEmail(string email)
         {
             if (email.Contains('@'))
