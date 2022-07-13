@@ -20,7 +20,7 @@ namespace ProjectFacialRecognition.Web.Controllers
         {
             if (!_extensionsImage.Contains(image.ContentType))
             {
-                return BadRequest("Tipo Inválido.");
+                return BadRequest("Invalid Type.");
             }
             using (var imageStream = new MemoryStream())
             {

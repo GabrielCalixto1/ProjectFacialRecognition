@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
+    <PackageReference Include="awssdk.rekognition" Version="3.7.8.30" />
     <PackageReference Include="awssdk.s3" Version="3.7.9.21" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
