@@ -30,9 +30,9 @@ namespace ProjectFacialRecognition.Web.Controllers
 
             var response = await _rekognitionClient.DetectFacesAsync(request);
 
-            if (response.FaceDetails.Count != 1 && response.FaceDetails.First().Eyeglasses.Value == true)
+            if (response.FaceDetails.Count() != 1 || response.FaceDetails.First().Eyeglasses.Value == true)
             {
-                BadRequest("No face or face has glasses/sunglasses");
+                return BadRequest();
             }
 
             return Ok(response);
