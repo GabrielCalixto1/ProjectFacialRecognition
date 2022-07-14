@@ -12,6 +12,33 @@ namespace ProjectFacialRecognition.Web.Controllers
         {
             _rekognitionClient = rekognitionClient;
         }
+
+        [HttpPost("Compare")]
+        public async Task<IActionResult> CompareFace(string nameFileS3, IFormFile selfieLogin)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                var request = new CompareFacesRequest();
+                var requestSource = new Image()
+                {
+                    S3Object = new S3Object()
+                    {
+                        Bucket = "imagesclass",
+                        Name = nameFileS3
+                    }
+                };
+                await selfieLogin.CopyToAsync(memoryStream);
+                var requestTarget = new Image()
+                {
+                    Bytes = memoryStream
+                };
+                request.SourceImage = requestSource;
+                request.TargetImage = requestTarget;
+                
+                var compareResult = await _rekognitionClient.CompareFacesAsync(request);
+                return Ok(compareResult);
+            }
+        }
         [HttpGet]
         public async Task<IActionResult> RecognitionFace(string file)
         {
