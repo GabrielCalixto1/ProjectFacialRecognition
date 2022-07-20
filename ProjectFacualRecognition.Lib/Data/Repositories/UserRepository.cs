@@ -17,5 +17,9 @@ namespace ProjectFacualRecognition.Lib.Data.Repositories
             user.SetEmail(email);
             await _context.SaveChangesAsync();
         }
+         public async Task<User> GetUserByEmail(string email)
+        {
+           return await _dbSet.AsNoTracking().FirstAsync(x => x.Email == email);
+        }
     }
 }
