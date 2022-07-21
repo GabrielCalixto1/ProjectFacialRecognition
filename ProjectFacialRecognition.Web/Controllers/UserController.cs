@@ -27,7 +27,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             _amazonS3 = amazonS3;
             _repository = repository;
         }
-        [HttpPost("LoginImage")]
+        [HttpPost("loginImage")]
         public async Task<IActionResult> LoginImage(int id, IFormFile imageLogin)
         {
             var user = await _repository.GetUserById(id);
@@ -40,24 +40,23 @@ namespace ProjectFacialRecognition.Web.Controllers
             return Ok();
         }
 
-        [HttpPost("Image")]
+        [HttpPost("image")]
         public async Task<IActionResult> RegisterImage(int id, IFormFile image)
         {
             var fileName = await SaveS3(image);
             var imageValid = await ValidateImage(fileName);
             if (imageValid)
             {
-                //update postgree to add url image in user
+                await _repository.SetNewUrlImageById(id, fileName);
                 return Ok();
             }
             else
             {
-
                 await _amazonS3.DeleteObjectAsync("imagesclass", fileName);
                 return BadRequest();
             }
         }
-        [HttpGet("Login")]
+        [HttpGet("login")]
         public async Task<IActionResult> LoginValidate(string email, string password)
         {
             var user = await _repository.GetUserByEmail(email);
@@ -68,7 +67,7 @@ namespace ProjectFacialRecognition.Web.Controllers
 
             return Ok(user.Id);
         }
-        public async Task<bool> ValidateImage(string file)
+        private async Task<bool> ValidateImage(string file)
         {
 
             var request = new DetectFacesRequest();
@@ -93,7 +92,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             return true;
 
         }
-        public async Task<string> SaveS3(IFormFile image)
+        private async Task<string> SaveS3(IFormFile image)
         {
             if (!_extensionsImage.Contains(image.ContentType))
             {
@@ -112,7 +111,7 @@ namespace ProjectFacialRecognition.Web.Controllers
 
             }
         }
-        public async Task<bool> CompareFace(string nameFileS3, IFormFile selfieLogin)
+        private async Task<bool> CompareFace(string nameFileS3, IFormFile selfieLogin)
         {
             using (var memoryStream = new MemoryStream())
             {
@@ -130,11 +129,12 @@ namespace ProjectFacialRecognition.Web.Controllers
                 {
                     Bytes = memoryStream
                 };
+
                 request.SourceImage = requestSource;
                 request.TargetImage = requestTarget;
 
                 var compareResult = await _rekognitionClient.CompareFacesAsync(request);
-                var similarity = compareResult.FaceMatches.First(x => x.Similarity >= 0);
+                var similarity = compareResult.FaceMatches.FirstOrDefault(x => x.Similarity > 0 );
 
                 if (similarity.Similarity < 60)
                 {
@@ -145,7 +145,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             }
         }
 
-        [HttpPost("create")]
+        [HttpPost("user")]
         public async Task<IActionResult> CreateUser(UserDto userDto)
         {
             try
@@ -159,7 +159,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet()]
+        [HttpGet("GetId")]
         public async Task<IActionResult> GetUserById(int id)
         {
 
@@ -172,7 +172,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("All")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllUsers()
         {
 
@@ -185,7 +185,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut()]
+        [HttpPut("UpEmail")]
         public async Task<IActionResult> UpdateEmailUserById(int id, string email)
         {
 
@@ -200,7 +200,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             }
 
         }
-        [HttpDelete()]
+        [HttpDelete("DeleteID")]
         public async Task<IActionResult> DeleteUserById(int id)
         {
 
