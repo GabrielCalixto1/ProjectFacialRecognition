@@ -15,7 +15,7 @@ namespace ProjectFacialRecognition.Web.Controllers
         {
             _amazonS3 = amazonS3;
         }
-        [HttpPost]
+        [HttpPost("1")]
         public async Task<IActionResult> CreateImage(IFormFile image)
         {
             if (!_extensionsImage.Contains(image.ContentType))
@@ -35,20 +35,20 @@ namespace ProjectFacialRecognition.Web.Controllers
 
             }
         }
-        [HttpDelete]
+        [HttpDelete("2")]
         public async Task<IActionResult> DeleteImage(string nameFileInS3)
         {
             var response = await _amazonS3.DeleteObjectAsync("imagesclass", nameFileInS3);
             return Ok(response);
         }
 
-        [HttpGet("bucket")]
+        [HttpGet("3")]
         public async Task<IActionResult> ListBuckets()
         {
             var response = await _amazonS3.ListBucketsAsync();
             return Ok(response);
         }
-        [HttpPost("bucket")]
+        [HttpPost("Bucket")]
         public async Task<IActionResult> CreateBucket(string nameBucket)
         {
             var response = await _amazonS3.PutBucketAsync(nameBucket);

@@ -24,6 +24,7 @@ namespace ProjectFacualRecognition.Lib.Data.Repositories
         {
            return await _dbSet.AsNoTracking().FirstAsync(x => x.Id == id);
         }
+      
           public async Task<List<T>> GetAllUsers()
         {
             return await _dbSet.AsNoTracking().ToListAsync();
