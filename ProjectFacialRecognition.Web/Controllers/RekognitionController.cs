@@ -13,7 +13,7 @@ namespace ProjectFacialRecognition.Web.Controllers
             _rekognitionClient = rekognitionClient;
         }
 
-        [HttpPost()]
+
         public async Task<IActionResult> CompareFace(string nameFileS3, IFormFile selfieLogin)
         {
             using (var memoryStream = new MemoryStream())
@@ -39,8 +39,7 @@ namespace ProjectFacialRecognition.Web.Controllers
                 return Ok(compareResult);
             }
         }
-        
-        [HttpGet()]
+
         public async Task<IActionResult> RecognitionFace(string file)
         {
 
